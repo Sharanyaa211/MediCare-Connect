@@ -1,0 +1,34 @@
+MediCare Connect - Project Source Handoff
+
+This archive contains the MERN source code and the latest 30-minute appointment slot booking changes.
+
+Frontend:
+  frontend/src/App.jsx
+  frontend/src/style.css
+
+Backend:
+  backend/src/routes/appointments.js
+  backend/src/routes/admin.js
+
+Setup:
+1. Install Node.js and MongoDB.
+2. In backend, run: npm install
+3. Copy backend/.env.example to backend/.env and configure MONGODB_URI, JWT_SECRET, PORT=5001, CLIENT_URL=http://localhost:5174.
+4. In frontend, run: npm install
+5. Create frontend/.env with VITE_API_URL=http://localhost:5001/api
+6. Start MongoDB.
+7. Start backend: cd backend && npm run dev
+8. Start frontend: cd frontend && npm run dev -- --port 5174
+9. Open http://localhost:5174
+
+Appointment slots:
+- Generated in 30-minute intervals from 09:00 through 16:30.
+- Clinic time window is 09:00 AM to 05:00 PM.
+- Pending and confirmed appointments reserve a slot.
+- Cancelled and rejected appointments release a slot.
+- The MongoDB unique partial index on doctor/date/time for pending and confirmed appointments must exist to protect against simultaneous double-booking.
+
+Security:
+- Do not upload your real backend/.env file or share JWT secrets.
+- node_modules and local MongoDB data are intentionally excluded. Run npm install in both frontend and backend folders after extracting.
+- This archive contains source files, not a live database backup.
