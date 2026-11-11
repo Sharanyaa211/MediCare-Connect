@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Pulls code from your Git repository
+                git branch: 'main', url: 'https://github.com/Sharanyaa211/MediCare-Connect.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building backend and frontend dependencies...'
+                dir('medicare-connect/backend') {
+                    sh 'npm install'
+                }
+                dir('medicare-connect/frontend') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application locally using Docker Compose...'
+                sh 'docker compose up -d --build'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'CI Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Please check the build logs.'
+        }
+    }
+}
