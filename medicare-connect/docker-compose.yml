@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./medicare-connect/backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGODB_URI=mongodb+srv://medicare:medicare1234@fullstack.mit1ba3.mongodb.net/medicare_connect?retryWrites=true&w=majority
+      - JWT_SECRET=4de73c6f56baede51fa9932f47008fd9c6b119befec437b7f008cb23aad40864
+      - CLIENT_URL=http://localhost:5174
+    restart: always
+
+  frontend:
+    build: ./medicare-connect/frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
